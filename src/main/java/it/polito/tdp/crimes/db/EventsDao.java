@@ -53,5 +53,41 @@ public class EventsDao {
 			return null ;
 		}
 	}
+	
+	public List<String> getVertex(String categoria, int anno){
+		List<String> result = new ArrayList<>();
+		String sql = "SELECT distinct(offense_type_id) as result FROM EVENTS WHERE Year(reported_date)=? AND offense_category_id=?" ;
+		try {
+			Connection conn = DBConnect.getConnection() ;
+
+			PreparedStatement st = conn.prepareStatement(sql) ;
+			st.setInt(1,anno);
+			st.setString(2, categoria);
+			ResultSet res = st.executeQuery() ;
+			
+			while(res.next()) {
+				try {
+					result.add(res.getString("result"));
+				} catch (Throwable t) {
+					t.printStackTrace();
+					System.out.println(res.getInt("id"));
+				}
+			}
+	
+	
+			conn.close();
+			return result;
+
+
+	} catch (SQLException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+	return null;
+	
+	}
+	
+	
+	
+	}
 
 }

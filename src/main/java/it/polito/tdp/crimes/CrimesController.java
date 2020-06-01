@@ -7,6 +7,7 @@ package it.polito.tdp.crimes;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.crimes.model.Event;
 import it.polito.tdp.crimes.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,10 +26,10 @@ public class CrimesController {
     private URL location;
 
     @FXML // fx:id="boxCategoria"
-    private ComboBox<?> boxCategoria; // Value injected by FXMLLoader
+    private ComboBox<String> boxCategoria; // Value injected by FXMLLoader
 
     @FXML // fx:id="boxAnno"
-    private ComboBox<?> boxAnno; // Value injected by FXMLLoader
+    private ComboBox<Integer> boxAnno; // Value injected by FXMLLoader
 
     @FXML // fx:id="btnAnalisi"
     private Button btnAnalisi; // Value injected by FXMLLoader
@@ -67,5 +68,40 @@ public class CrimesController {
     
     public void setModel(Model model) {
     	this.model = model;
+    	for(int i=0;i<model.getEventi().size();i++) {
+    		if(!boxCategoria.getItems().contains(model.getEventi().get(i).getOffense_category_id()))
+    			boxCategoria.getItems().add(model.getEventi().get(i).getOffense_category_id());
+    		if(!boxAnno.getItems().contains(model.getEventi().get(i).getReported_date().getYear()))
+    			boxAnno.getItems().add(model.getEventi().get(i).getReported_date().getYear());
+    	}
+    	txtResult.setEditable(false);
+    	
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
